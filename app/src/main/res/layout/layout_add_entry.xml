@@ -28,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
-                android:id="@+id/debit_head"
+                android:id="@+id/debitHead"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -55,7 +55,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/debit_head">
+                app:layout_constraintTop_toBottomOf="@+id/debitHead">
 
             </Spinner>
 
@@ -70,7 +70,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/debitSubHead" />
 
             <Spinner
-                android:id="@+id/spinner"
+                android:id="@+id/creditHead"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -85,7 +85,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner" />
+                app:layout_constraintTop_toBottomOf="@+id/creditHead" />
 
             <TextView
                 android:id="@+id/textView10"
