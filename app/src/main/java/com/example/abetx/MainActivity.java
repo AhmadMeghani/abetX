@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.abetx.Entry.AddEntry;
+import com.example.abetx.Models.Transactions;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,7 +29,20 @@ public class MainActivity extends AppCompatActivity
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
-        String[] stg = {"Physics", "Chemistry", "Math", "Ago", "Gif", "Frog", "Bio", "C", "C++", "Java", "C#", "Python", "JavaScript", "OpenGL"};
+        Transactions[] stg = {new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("28/1/2012", "Land", "N/P", 2000, 2000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000),
+                new Transactions("27/1/2012", "Cash", "A/P", 1000, 1000)};
         recyclerView.setAdapter(new RecyclerAdapter(stg));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

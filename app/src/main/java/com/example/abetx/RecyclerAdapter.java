@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
-    private String[] groups;
+import com.example.abetx.Models.Transactions;
 
-    public RecyclerAdapter(String[] data) {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
+    private Transactions[] groups;
+
+    public RecyclerAdapter(Transactions[] data) {
         this.groups = data;
     }
 
@@ -22,12 +24,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public void onBindViewHolder(RecyclerHolder holder, int position) {
-        String stg = groups[position];
-        holder.text.setText(stg);
-        holder.text1.setText(stg);
-        holder.text2.setText(stg);
-        holder.text3.setText(stg);
-        holder.text4.setText(stg);
+        Transactions transactions = groups[position];
+        holder.date.setText(transactions.getDate());
+        holder.credit.setText(transactions.getCredit() + "");
+        holder.creditHead.setText(transactions.getCredit_head());
+        holder.debit.setText(transactions.getDebit() + "");
+        holder.debitHead.setText(transactions.getDebit_head());
     }
 
     @Override
@@ -37,19 +39,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     public class RecyclerHolder extends RecyclerView.ViewHolder {
 
-        TextView text;
-        TextView text1;
-        TextView text2;
-        TextView text3;
-        TextView text4;
+        TextView date;
+        TextView credit;
+        TextView creditHead;
+        TextView debit;
+        TextView debitHead;
 
         public RecyclerHolder(View itemView) {
             super(itemView);
-            text = itemView.findViewById(R.id.gj_date);
-            text1 = itemView.findViewById(R.id.gj_credit);
-            text2 = itemView.findViewById(R.id.gj_credit_head);
-            text3 = itemView.findViewById(R.id.gj_debit);
-            text4 = itemView.findViewById(R.id.gj_debit_head);
+            date = itemView.findViewById(R.id.gj_date);
+            credit = itemView.findViewById(R.id.gj_credit);
+            creditHead = itemView.findViewById(R.id.gj_credit_head);
+            debit = itemView.findViewById(R.id.gj_debit);
+            debitHead = itemView.findViewById(R.id.gj_debit_head);
 
         }
     }
