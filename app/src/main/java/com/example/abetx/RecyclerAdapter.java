@@ -24,6 +24,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public void onBindViewHolder(RecyclerHolder holder, int position) {
         String stg = groups[position];
         holder.text.setText(stg);
+        holder.text1.setText(stg);
+        holder.text2.setText(stg);
+        holder.text3.setText(stg);
+        holder.text4.setText(stg);
     }
 
     @Override
@@ -34,10 +38,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     public class RecyclerHolder extends RecyclerView.ViewHolder {
 
         TextView text;
+        TextView text1;
+        TextView text2;
+        TextView text3;
+        TextView text4;
 
         public RecyclerHolder(View itemView) {
             super(itemView);
             text = itemView.findViewById(R.id.gj_date);
+            text1 = itemView.findViewById(R.id.gj_credit);
+            text2 = itemView.findViewById(R.id.gj_credit_head);
+            text3 = itemView.findViewById(R.id.gj_debit);
+            text4 = itemView.findViewById(R.id.gj_debit_head);
 
         }
     }

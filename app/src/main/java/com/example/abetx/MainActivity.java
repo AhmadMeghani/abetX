@@ -1,5 +1,6 @@
 package com.example.abetx;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.abetx.Entry.AddEntry;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private RecyclerView recyclerView;
@@ -25,7 +28,7 @@ public class MainActivity extends AppCompatActivity
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
-        String[] stg = {"Physics", "Chemistry", "Math", "Bio", "C", "C++", "Java", "C#", "Python", "JavaScript", "OpenGL"};
+        String[] stg = {"Physics", "Chemistry", "Math", "Ago", "Gif", "Frog", "Bio", "C", "C++", "Java", "C#", "Python", "JavaScript", "OpenGL"};
         recyclerView.setAdapter(new RecyclerAdapter(stg));
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -34,7 +37,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MainActivity.this, AddEntry.class);
+                startActivity(intent);
             }
         });
 

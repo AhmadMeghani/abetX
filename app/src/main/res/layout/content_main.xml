@@ -73,16 +73,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <android.support.v7.widget.RecyclerView
-        android:layout_width="395dp"
-        android:layout_height="566dp"
+        android:id="@+id/gj_recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/gj_recyclerview"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
-
-        <include layout="@layout/layout_recyclerview_generaljournal" />
-    </android.support.v7.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 </android.support.constraint.ConstraintLayout>
