@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.abetx.MainActivity;
@@ -97,15 +98,15 @@ public class LogIn extends AppCompatActivity {
                 }
             }
         });
-//        TextView linkSignUp = (TextView) findViewById(R.id.link_signup);
-//        linkSignUp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-        if (mAuth.getCurrentUser() != null) {
+        TextView linkSignUp = (TextView) findViewById(R.id.link_signup);
+        linkSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LogIn.this, Register.class);
+                startActivity(intent);
+            }
+        });
+        if (mAuth.getCurrentUser() != null && mAuth.getCurrentUser().isEmailVerified()) {
             Intent intent = new Intent(LogIn.this, MainActivity.class);
             startActivity(intent);
             finish();

@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         };
+        //mAuth.signOut();
     }
 
     @Override
@@ -170,7 +171,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void checkCurrentUser(FirebaseUser user) {
-        if (user == null) {
+        if (user == null || !user.isEmailVerified()) {
             Intent intent = new Intent(MainActivity.this, LogIn.class);
             startActivity(intent);
         }

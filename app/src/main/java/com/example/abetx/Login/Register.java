@@ -12,8 +12,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
+import com.example.abetx.R;
+import com.example.abetx.Utilities.FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -23,25 +24,23 @@ public class Register extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
     private EditText mEmail, mPassword, mUsername;
-    private String email, password, username, append = "";
+    private String email, password, username;
     private Button btnRegistering;
-    private TextView registering;
 
-    //private FirebaseMethods firebaseMethods;
+    private FirebaseMethods firebaseMethods;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register);
         Window window = getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
-        //firebaseMethods = new FirebaseMethods(RegisterActivity.this);
+        firebaseMethods = new FirebaseMethods(Register.this);
         initWidgets();
         init();
         setupFireBaseAuth();
-
     }
 
     private void init() {
@@ -53,23 +52,19 @@ public class Register extends AppCompatActivity {
                 username = mUsername.getText().toString();
                 if (checkInputs(email, password, username)) {
                     mProgressBar.setVisibility(View.VISIBLE);
-                    registering.setVisibility(View.VISIBLE);
 
-                    //  firebaseMethods.registerNewUser(email, password, username);
+                    firebaseMethods.registerNewUser(email, password, username);
                 }
             }
         });
     }
-
     private void initWidgets() {
-//        mEmail = (EditText) findViewById(R.id.input_email);
-//        mPassword = (EditText) findViewById(R.id.input_password);
-//        mUsername = (EditText) findViewById(R.id.input_username);
-//        btnRegistering = (Button) findViewById(R.id.bt_register);
-//        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-//        registering = (TextView) findViewById(R.id.registering);
-//        mProgressBar.setVisibility(View.GONE);
-//        registering.setVisibility(View.GONE);
+        mEmail = (EditText) findViewById(R.id.input_email);
+        mPassword = (EditText) findViewById(R.id.input_password);
+        mUsername = (EditText) findViewById(R.id.input_username);
+        btnRegistering = (Button) findViewById(R.id.bt_register);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.GONE);
     }
 
     private boolean checkInputs(String email, String password, String username) {
@@ -77,14 +72,6 @@ public class Register extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-    private boolean isStringNull(String stg) {
-        if (stg.equals("")) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     //------------------------------FireBase-------------------------------------

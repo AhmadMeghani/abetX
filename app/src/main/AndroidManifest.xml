@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".Entry.AddEntry" />
         <activity android:name=".Login.LogIn" />
+        <activity android:name=".Login.Register" />
     </application>
 
 </manifest>
