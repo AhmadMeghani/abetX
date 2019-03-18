@@ -3,6 +3,7 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.abetx">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <dist:module dist:instant="true" />
 
     <application
@@ -23,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Entry.AddEntry" />
+        <activity android:name=".Login.LogIn" />
     </application>
 
 </manifest>

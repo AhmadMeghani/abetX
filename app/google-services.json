@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "465886999832",
+    "firebase_url": "https://abetx-e3d05.firebaseio.com",
+    "project_id": "abetx-e3d05",
+    "storage_bucket": "abetx-e3d05.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465886999832:android:2b561f45a2171589",
+        "android_client_info": {
+          "package_name": "com.example.abetx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465886999832-huvp5psieo1nm2r86rh5el8prs2kr861.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.abetx",
+            "certificate_hash": "746d57c0d3acba5d6fc28dc740ba0917f01f12c1"
+          }
+        },
+        {
+          "client_id": "465886999832-q9d29o4j8up21jnfrn70g9uijam20se8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSVzIiu6UDu4IKpVS8JoLEJtusd2lIW4Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "465886999832-q9d29o4j8up21jnfrn70g9uijam20se8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
