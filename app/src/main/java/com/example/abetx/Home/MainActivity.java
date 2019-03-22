@@ -1,31 +1,38 @@
-package com.example.abetx;
+package com.example.abetx.Home;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.view.Window;
+import android.view.WindowManager;
 
-import com.example.abetx.Entry.AddEntry;
+import com.example.abetx.Entry.Entry;
 import com.example.abetx.Login.LogIn;
-import com.example.abetx.Models.Transactions;
+import com.example.abetx.R;
+import com.example.abetx.TAccounts.TAccounts;
+import com.example.abetx.Utilities.SectionStatePageAdapter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private SectionStatePageAdapter sectionStatePageAdapter;
+    private ViewPager mViewPager;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -35,25 +42,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = (RecyclerView) findViewById(R.id.gj_recyclerview);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
-        Transactions[] stg = {new Transactions("27/01/01", "Cash", "Unearned Revenue", 10000, 20),
-                new Transactions("28/01/20", "Land", "N/P", 200, 20000),
-                new Transactions("27/02/22", "Cash", "Electric Expense", 1000, 1000),
-                new Transactions("27/03/20", "Service Revenue", "A/P", 10, 1000),
-                new Transactions("27/04/11", "R/V", "A/P", 1000, 1000),
-                new Transactions("27/05/12", "OC", "A/P", 1000, 1000),
-                new Transactions("27/06/12", "Unearned Revenue", "Electric Expense", 1000, 1000),
-                new Transactions("01/07/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("27/08/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("17/09/12", "Electric Expense", "A/P", 1000, 1000),
-                new Transactions("27/10/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("37/11/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("27/12/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("07/12/12", "Cash", "A/P", 1000, 1000)};
-        recyclerView.setAdapter(new RecyclerAdapter(stg));
+        Window window = getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -61,7 +54,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddEntry.class);
+                Intent intent = new Intent(MainActivity.this, Entry.class);
                 startActivity(intent);
             }
         });
@@ -76,6 +69,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         FirebaseApp.initializeApp(this);
         setupFireBaseAuth();
+        mViewPager = findViewById(R.id.container);
+        setupFragment();
+        setmViewPager(0);
     }
 
     @Override
@@ -116,10 +112,10 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
+        if (id == R.id.nav_general_journal) {
+            setmViewPager(0);
+        } else if (id == R.id.nav_taccounts) {
+            setmViewPager(1);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -147,7 +143,7 @@ public class MainActivity extends AppCompatActivity
                 if (user != null) {
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Sign Out", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Sign Out", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -175,5 +171,16 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, LogIn.class);
             startActivity(intent);
         }
+    }
+
+    private void setupFragment() {
+        sectionStatePageAdapter = new SectionStatePageAdapter(getSupportFragmentManager());
+        sectionStatePageAdapter.addFragment(new GeneralJournal(), getString(R.string.add_entry));
+        sectionStatePageAdapter.addFragment(new TAccounts(), getString(R.string.add_entry));
+    }
+
+    private void setmViewPager(int fragmentNumber) {
+        mViewPager.setAdapter(sectionStatePageAdapter);
+        mViewPager.setCurrentItem(fragmentNumber);
     }
 }
