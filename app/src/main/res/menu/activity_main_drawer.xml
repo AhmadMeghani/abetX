@@ -13,7 +13,7 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="T Accounts" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_trial_balance"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Trial Balance" />
         <item
@@ -37,7 +37,7 @@
                 android:icon="@drawable/ic_menu_share"
                 android:title="Account Settings" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_sign_out"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Sign Out" />
         </menu>
