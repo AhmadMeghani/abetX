@@ -23,6 +23,7 @@ import com.example.abetx.Entry.Entry;
 import com.example.abetx.Login.LogIn;
 import com.example.abetx.R;
 import com.example.abetx.TAccounts.TAccounts;
+import com.example.abetx.TrialBalance.TrialBalance;
 import com.example.abetx.Utilities.SectionStatePageAdapter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_taccounts) {
             setmViewPager(1);
         } else if (id == R.id.nav_trial_balance) {
-
+            setmViewPager(2);
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -127,6 +128,18 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setupFragment() {
+        sectionStatePageAdapter = new SectionStatePageAdapter(getSupportFragmentManager());
+        sectionStatePageAdapter.addFragment(new GeneralJournal(), getString(R.string.general_journal));
+        sectionStatePageAdapter.addFragment(new TAccounts(), getString(R.string.taccounts));
+        sectionStatePageAdapter.addFragment(new TrialBalance(), getString(R.string.trial_balance));
+    }
+
+    private void setmViewPager(int fragmentNumber) {
+        mViewPager.setAdapter(sectionStatePageAdapter);
+        mViewPager.setCurrentItem(fragmentNumber);
     }
 
     // --------------------------- Firebase ---------------------
@@ -169,16 +182,5 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, LogIn.class);
             startActivity(intent);
         }
-    }
-
-    private void setupFragment() {
-        sectionStatePageAdapter = new SectionStatePageAdapter(getSupportFragmentManager());
-        sectionStatePageAdapter.addFragment(new GeneralJournal(), getString(R.string.add_entry));
-        sectionStatePageAdapter.addFragment(new TAccounts(), getString(R.string.add_entry));
-    }
-
-    private void setmViewPager(int fragmentNumber) {
-        mViewPager.setAdapter(sectionStatePageAdapter);
-        mViewPager.setCurrentItem(fragmentNumber);
     }
 }

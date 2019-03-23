@@ -38,7 +38,7 @@ public class GeneralJournal extends Fragment {
                 new Transactions("27/10/12", "Cash", "A/P", 1000, 1000),
                 new Transactions("37/11/12", "Cash", "A/P", 1000, 1000),
                 new Transactions("27/12/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("07/12/12", "Cash", "A/P", 1000, 1000)};
+                new Transactions("07/12/17", "Land", "A/P", 1000, 1000)};
         recyclerView.setAdapter(new RecyclerAdapter(stg));
         return view;
     }

@@ -7,6 +7,10 @@ public class Transactions {
     private int debit;
     private int credit;
 
+    public Transactions() {
+
+    }
+
     public Transactions(String date, String debit_head, String credit_head, int debit, int credit) {
         this.date = date;
         this.debit_head = debit_head;

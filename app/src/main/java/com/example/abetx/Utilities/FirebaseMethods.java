@@ -6,14 +6,19 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.example.abetx.Login.LogIn;
+import com.example.abetx.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FirebaseMethods {
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     private Context context;
     private String userID;
@@ -21,7 +26,7 @@ public class FirebaseMethods {
     public FirebaseMethods(Context context) {
         this.context = context;
         this.mAuth = FirebaseAuth.getInstance();
-
+        db = FirebaseFirestore.getInstance();
         if (mAuth.getCurrentUser() != null) {
             this.userID = mAuth.getCurrentUser().getUid();
         }
@@ -36,6 +41,19 @@ public class FirebaseMethods {
                             sendVerificationEmail();
                             // Sign in success, update UI with the signed-in user's information
                             userID = mAuth.getCurrentUser().getUid();
+                            User user = new User(username, userID, "", "Available");
+                            db.collection("users").document(userID).set(user)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
                             Intent intent = new Intent(context, LogIn.class);
                             context.startActivity(intent);
                         } else {

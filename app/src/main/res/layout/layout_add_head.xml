@@ -28,7 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/headName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/entitySpinner" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/addHead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
@@ -49,5 +49,5 @@
         android:text="DONE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/headName" />
 </android.support.constraint.ConstraintLayout>

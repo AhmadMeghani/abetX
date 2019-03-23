@@ -8,4 +8,7 @@
     <string name="action_settings">Settings</string>
     <string name="add_entry">Add Entry</string>
     <string name="add_head">Add Head</string>
+    <string name="taccounts">T Accounts</string>
+    <string name="trial_balance">Trial Balance</string>
+    <string name="general_journal">General Journal</string>
 </resources>

@@ -8,20 +8,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.abetx.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AddHead extends Fragment {
-    private Spinner entitySpinner;
+    private FirebaseFirestore db;
 
+    private Spinner entitySpinner;
+    private Button addHead;
+    private EditText headName;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_add_head, container, false);
-        entitySpinner = (Spinner) view.findViewById(R.id.entitySpinner);
+        db = FirebaseFirestore.getInstance();
+        entitySpinner = view.findViewById(R.id.entitySpinner);
+        addHead = view.findViewById(R.id.addHead);
+        headName = view.findViewById(R.id.headName);
+        addHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String, Object> map = new HashMap<>();
+                map.put("cash", headName.toString());
+                db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .collection("Heads").document("Assets").set(map);
+            }
+        });
         setupSpinners();
         return view;
     }

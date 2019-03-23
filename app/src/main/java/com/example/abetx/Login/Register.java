@@ -17,10 +17,12 @@ import com.example.abetx.R;
 import com.example.abetx.Utilities.FirebaseMethods;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Register extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseFirestore db;
 
     private ProgressBar mProgressBar;
     private EditText mEmail, mPassword, mUsername;
@@ -38,6 +40,7 @@ public class Register extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
         firebaseMethods = new FirebaseMethods(Register.this);
+        db = FirebaseFirestore.getInstance();
         initWidgets();
         init();
         setupFireBaseAuth();
