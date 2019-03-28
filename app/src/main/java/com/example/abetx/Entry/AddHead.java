@@ -13,7 +13,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.abetx.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -36,10 +41,31 @@ public class AddHead extends Fragment {
         addHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String, Object> map = new HashMap<>();
-                map.put("cash", headName.toString());
-                db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .collection("Heads").document("Assets").set(map);
+                final HashMap<String, Object> map = new HashMap<>();
+                DocumentReference docRef = db.collection("users")
+                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection("Heads")
+                        .document(entitySpinner.getSelectedItem().toString());
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                map.put(headName.getText().toString(), headName.getText().toString());
+                                CollectionReference collectionReference = db.collection("users")
+                                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .collection("Heads");
+                                collectionReference.document(entitySpinner.getSelectedItem().toString()).update(map);
+                            } else {
+                                map.put(headName.getText().toString(), headName.getText().toString());
+                                CollectionReference collectionReference = db.collection("users")
+                                        .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .collection("Heads");
+                                collectionReference.document(entitySpinner.getSelectedItem().toString()).set(map);
+                            }
+                        }
+                    }
+                });
             }
         });
         setupSpinners();
