@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.abetx.AccountSettings.AccountSettingsFragment;
 import com.example.abetx.Entry.Entry;
 import com.example.abetx.Login.LogIn;
 import com.example.abetx.R;
@@ -119,8 +120,8 @@ public class MainActivity extends AppCompatActivity
             setmViewPager(2);
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.nav_account_settings) {
+            setmViewPager(3);
         } else if (id == R.id.nav_sign_out) {
             mAuth.signOut();
         }
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity
         sectionStatePageAdapter.addFragment(new GeneralJournal(), getString(R.string.general_journal));
         sectionStatePageAdapter.addFragment(new TAccounts(), getString(R.string.taccounts));
         sectionStatePageAdapter.addFragment(new TrialBalance(), getString(R.string.trial_balance));
+        sectionStatePageAdapter.addFragment(new AccountSettingsFragment(), getString(R.string.account_settings));
     }
 
     private void setmViewPager(int fragmentNumber) {

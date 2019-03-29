@@ -11,4 +11,5 @@
     <string name="taccounts">T Accounts</string>
     <string name="trial_balance">Trial Balance</string>
     <string name="general_journal">General Journal</string>
+    <string name="account_settings">Account Settings</string>
 </resources>
