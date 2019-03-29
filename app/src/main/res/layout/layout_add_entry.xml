@@ -98,7 +98,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/creditSubHead" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/amount"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -116,12 +116,12 @@
                 android:datePickerMode="calendar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText">
+                app:layout_constraintTop_toBottomOf="@+id/amount">
 
             </DatePicker>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/addEntry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="160dp"

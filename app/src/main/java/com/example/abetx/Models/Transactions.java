@@ -1,5 +1,8 @@
 package com.example.abetx.Models;
 
+import com.google.firebase.firestore.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Transactions {
     private String date;
     private String debit_head;

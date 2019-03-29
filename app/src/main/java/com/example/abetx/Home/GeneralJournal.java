@@ -6,40 +6,60 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.abetx.Models.Transactions;
 import com.example.abetx.R;
 import com.example.abetx.Utilities.RecyclerAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeneralJournal extends Fragment {
-    private RecyclerView recyclerView;
+    private FirebaseFirestore db;
 
+    private RecyclerView recyclerView;
+    private ArrayList<Transactions> transactions = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layout_general_journal, container, false);
+        db = FirebaseFirestore.getInstance();
         recyclerView = (RecyclerView) view.findViewById(R.id.gj_recyclerview);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
-        Transactions[] stg = {new Transactions("27/01/01", "Cash", "Unearned Revenue", 10000, 20),
-                new Transactions("28/01/20", "Land", "N/P", 200, 20000),
-                new Transactions("27/02/22", "Cash", "Electric Expense", 1000, 1000),
-                new Transactions("27/03/20", "Service Revenue", "A/P", 10, 1000),
-                new Transactions("27/04/11", "R/V", "A/P", 1000, 1000),
-                new Transactions("27/05/12", "OC", "A/P", 1000, 1000),
-                new Transactions("27/06/12", "Unearned Revenue", "Electric Expense", 1000, 1000),
-                new Transactions("01/07/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("27/08/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("17/09/12", "Electric Expense", "A/P", 1000, 1000),
-                new Transactions("27/10/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("37/11/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("27/12/12", "Cash", "A/P", 1000, 1000),
-                new Transactions("07/12/17", "Land", "A/P", 1000, 1000)};
-        recyclerView.setAdapter(new RecyclerAdapter(stg));
+        final RecyclerAdapter adapter = new RecyclerAdapter(transactions);
+        recyclerView.setAdapter(adapter);
+        CollectionReference colRef = db.collection("users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("Transactions");
+        colRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    List<Transactions> transaction = queryDocumentSnapshots.toObjects(Transactions.class);
+                    transactions.addAll(transaction);
+                    adapter.notifyDataSetChanged();
+                    Log.i("Tran", transactions.toString());
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 }

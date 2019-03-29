@@ -4,14 +4,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.example.abetx.Models.Transactions;
 import com.example.abetx.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,11 +32,10 @@ import java.util.Iterator;
 public class AddEntry extends Fragment {
     private FirebaseFirestore db;
 
-    private Spinner debitSpinner;
-    private Spinner creditSpinner;
-    private Spinner debitSubSpinner;
-    private Spinner creditSubSpinner;
-    private Button addHead;
+    private Spinner debitSpinner, creditSpinner, debitSubSpinner, creditSubSpinner;
+    private EditText amount;
+    private Button addEntry, addHead;
+    private String ID = "";
 
     @Nullable
     @Override
@@ -42,7 +46,9 @@ public class AddEntry extends Fragment {
         creditSpinner = view.findViewById(R.id.creditHead);
         debitSubSpinner = view.findViewById(R.id.debitSubHead);
         creditSubSpinner = view.findViewById(R.id.creditSubHead);
+        amount = view.findViewById(R.id.amount);
         addHead = view.findViewById(R.id.addHead);
+        addEntry = view.findViewById(R.id.addEntry);
         addHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +80,65 @@ public class AddEntry extends Fragment {
 
             }
         });
+        addEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addEntry();
+            }
+        });
         return view;
+    }
+
+    private void addEntry() {
+        if (!amount.getText().equals("")) {
+            if (creditSubSpinner.getSelectedItem().toString() != "") {
+                if (debitSubSpinner.getSelectedItem().toString() != "") {
+                    Transactions transactions = new Transactions("1", debitSubSpinner.getSelectedItem().toString(),
+                            creditSubSpinner.getSelectedItem().toString(),
+                            Integer.parseInt(amount.getText().toString()),
+                            Integer.parseInt(amount.getText().toString()));
+                    DocumentReference documentReference = db.collection("users")
+                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .collection("Transactions")
+                            .document(getTransactionId());
+                    documentReference.set(transactions);
+                } else {
+                    Toast.makeText(getActivity(), "Add Debit Sub Head", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getActivity(), "Add Credit Sub Head", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getActivity(), "Add Amount!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String getTransactionId() {
+        ID = "";
+        Task<QuerySnapshot> query = db.collection("users")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("Transactions")
+                .get();
+        query.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                Log.i("Tag", "I came here");
+                if (task.isSuccessful()) {
+                    Log.i("Tag", "here too");
+                    QuerySnapshot querySnapshot = task.getResult();
+                    if (querySnapshot.size() > 0) {
+                        ID += "t" + (querySnapshot.size() + 1);
+                        Log.i("Tag", "& here " + ID);
+                    } else {
+                        ID += "t1";
+                    }
+                } else {
+                    Log.i("Tag", "& here too");
+                    ID = "";
+                }
+            }
+        });
+        return "t3";
     }
 
     private void setupSubSpinners(String currentHead, final Spinner spinner) {

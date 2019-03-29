@@ -9,10 +9,12 @@ import android.widget.TextView;
 import com.example.abetx.Models.Transactions;
 import com.example.abetx.R;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
-    private Transactions[] groups;
+import java.util.ArrayList;
 
-    public RecyclerAdapter(Transactions[] data) {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
+    private ArrayList<Transactions> groups;
+
+    public RecyclerAdapter(ArrayList<Transactions> data) {
         this.groups = data;
     }
 
@@ -25,7 +27,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public void onBindViewHolder(RecyclerHolder holder, int position) {
-        Transactions transactions = groups[position];
+        Transactions transactions = groups.get(position);
         holder.date.setText(transactions.getDate());
         holder.credit.setText(transactions.getCredit() + "");
         holder.creditHead.setText(transactions.getCredit_head());
@@ -35,7 +37,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public int getItemCount() {
-        return this.groups.length;
+        return this.groups.size();
     }
 
     public class RecyclerHolder extends RecyclerView.ViewHolder {
