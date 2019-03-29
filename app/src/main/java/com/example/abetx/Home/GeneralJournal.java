@@ -49,6 +49,7 @@ public class GeneralJournal extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if (!queryDocumentSnapshots.isEmpty()) {
                     List<Transactions> transaction = queryDocumentSnapshots.toObjects(Transactions.class);
+                    clear(adapter);
                     transactions.addAll(transaction);
                     adapter.notifyDataSetChanged();
                     Log.i("Tran", transactions.toString());
@@ -61,5 +62,15 @@ public class GeneralJournal extends Fragment {
             }
         });
         return view;
+    }
+
+    public void clear(RecyclerAdapter adapter) {
+        final int size = transactions.size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                transactions.remove(0);
+            }
+            adapter.notifyItemRangeRemoved(0, size);
+        }
     }
 }

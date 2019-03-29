@@ -20,6 +20,7 @@ import com.example.abetx.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -83,13 +84,14 @@ public class AddEntry extends Fragment {
         addEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addEntry();
+                getTransactionId();
             }
         });
         return view;
     }
 
     private void addEntry() {
+        Log.i("Tag1", "ID" + ID);
         if (!amount.getText().equals("")) {
             if (creditSubSpinner.getSelectedItem().toString() != "") {
                 if (debitSubSpinner.getSelectedItem().toString() != "") {
@@ -97,11 +99,10 @@ public class AddEntry extends Fragment {
                             creditSubSpinner.getSelectedItem().toString(),
                             Integer.parseInt(amount.getText().toString()),
                             Integer.parseInt(amount.getText().toString()));
-                    DocumentReference documentReference = db.collection("users")
+                    CollectionReference colRef = db.collection("users")
                             .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .collection("Transactions")
-                            .document(getTransactionId());
-                    documentReference.set(transactions);
+                            .collection("Transactions");
+                    colRef.document(ID + "").set(transactions);
                 } else {
                     Toast.makeText(getActivity(), "Add Debit Sub Head", Toast.LENGTH_LONG).show();
                 }
@@ -113,7 +114,7 @@ public class AddEntry extends Fragment {
         }
     }
 
-    private String getTransactionId() {
+    private void getTransactionId() {
         ID = "";
         Task<QuerySnapshot> query = db.collection("users")
                 .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -122,15 +123,17 @@ public class AddEntry extends Fragment {
         query.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.i("Tag", "I came here");
+                Log.i("Tag", "I came here" + ID);
                 if (task.isSuccessful()) {
                     Log.i("Tag", "here too");
                     QuerySnapshot querySnapshot = task.getResult();
                     if (querySnapshot.size() > 0) {
                         ID += "t" + (querySnapshot.size() + 1);
+                        addEntry();
                         Log.i("Tag", "& here " + ID);
                     } else {
                         ID += "t1";
+                        addEntry();
                     }
                 } else {
                     Log.i("Tag", "& here too");
@@ -138,7 +141,6 @@ public class AddEntry extends Fragment {
                 }
             }
         });
-        return "t3";
     }
 
     private void setupSubSpinners(String currentHead, final Spinner spinner) {
