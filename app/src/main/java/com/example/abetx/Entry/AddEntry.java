@@ -103,6 +103,11 @@ public class AddEntry extends Fragment {
                             .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .collection("Transactions");
                     colRef.document(ID + "").set(transactions);
+                    colRef = db.collection("users")
+                            .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .collection("Heads")
+                            .document(creditSpinner.getSelectedItem().toString())
+                            .collection(creditSubSpinner.getSelectedItem().toString());
                 } else {
                     Toast.makeText(getActivity(), "Add Debit Sub Head", Toast.LENGTH_LONG).show();
                 }
